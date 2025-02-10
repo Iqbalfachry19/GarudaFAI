@@ -153,9 +153,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">
-          ZerePy Chatbot
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">GarudaFAI</h2>
 
         {/* Select Agent */}
         <div className="mb-4">

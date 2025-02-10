@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+"use client";
 
-function App() {
-  const [agents, setAgents] = useState([]); // Store available agents
-  const [selectedAgent, setSelectedAgent] = useState(""); // Selected agent
-  const [connections, setConnections] = useState({}); // Store available connections (as an object)
-  const [loadStatus, setLoadStatus] = useState(""); // Status for loading the agent
-  const [response, setResponse] = useState("Awaiting response..."); // Response from the action
-  const [selectedConnection, setSelectedConnection] = useState(""); // Selected connection
-  const [prompt, setPrompt] = useState(""); // State for storing the prompt
-  const [messages, setMessages] = useState([]); // Store chat history
+import { useState, useEffect } from "react";
+import { ConnectionsDropdown } from "./components/ConnectionsDropdown";
+import { ChatWindow } from "./components/ChatWindow";
+import { ActionForm } from "./components/ActionForm";
+import { GarudaLogo } from "./components/GarudaLogo";
+
+export default function GarudaFAI() {
+  const [agents, setAgents] = useState([]);
+  const [selectedAgent, setSelectedAgent] = useState("");
+  const [connections, setConnections] = useState({});
+  const [loadStatus, setLoadStatus] = useState("");
+  const [response, setResponse] = useState("Awaiting response...");
+  const [selectedConnection, setSelectedConnection] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [messages, setMessages] = useState([]);
   const [action, setAction] = useState("");
+
   useEffect(() => {
-    // Fetch the list of agents on component mount
     const fetchAgents = async () => {
       try {
         const res = await fetch("http://localhost:8000/agents");
@@ -26,7 +32,6 @@ function App() {
 
   const handleLoadAgent = async () => {
     try {
-      // Load the selected agent
       const res = await fetch(
         `http://localhost:8000/agents/${selectedAgent}/load`,
         {
@@ -36,8 +41,6 @@ function App() {
 
       if (res.ok) {
         setLoadStatus(`Agent ${selectedAgent} loaded successfully!`);
-
-        // Once the agent is loaded, fetch the connections
         const connectionsRes = await fetch("http://localhost:8000/connections");
         const connectionsData = await connectionsRes.json();
         setConnections(connectionsData.connections || {});
@@ -74,7 +77,9 @@ function App() {
     // Add the system prompt only for LLM providers if the prompt is not empty
     if (isLLMProvider && prompt.trim()) {
       requestBody.params.unshift(prompt); // Add prompt at the beginning
-      requestBody.params.push("You are a helpful AI assistant");
+      requestBody.params.push(
+        "You are GarudaFAI, an advanced AI agent designed to interact with decentralized networks, AI models, and social platforms."
+      );
     }
 
     try {
@@ -113,55 +118,20 @@ function App() {
       setResponse("Error occurred while performing the action.");
     }
   };
-
-  const renderMessageWithLinks = (text) => {
-    // Convert the text to a string if it's not already a string
-    let textToRender = text;
-
-    if (typeof text !== "string") {
-      // If it's an object, convert it to JSON string
-      try {
-        textToRender = JSON.stringify(text, null, 2);
-      } catch (error) {
-        // If the object can't be stringified, fallback to default string
-        textToRender = String(text);
-      }
-    }
-
-    const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)/g; // Match http, https, or www links
-
-    return textToRender.split(urlRegex).map((part, index) => {
-      // Check if part is a string and contains a URL
-      if (typeof part === "string" && part.match(urlRegex)) {
-        return (
-          <a
-            key={index}
-            href={part.startsWith("http") ? part : `https://${part}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline break-all"
-          >
-            {part}
-          </a>
-        );
-      } else {
-        return <span key={index}>{part}</span>;
-      }
-    });
-  };
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">GarudaFAI</h2>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-red-700 to-red-900">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
+        <div className="flex items-center justify-center mb-6">
+          <GarudaLogo className="w-16 h-16" />
+          <h1 className="text-4xl font-bold text-red-800 ml-4">GarudaFAI</h1>
+        </div>
 
-        {/* Select Agent */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Select Agent
           </label>
           <select
-            className="mt-2 w-full border border-gray-300 rounded-lg p-2"
+            className="w-full border border-gray-300 rounded-lg p-3 bg-white shadow-sm focus:ring-2 focus:ring-red-500 focus:border-red-500"
             value={selectedAgent}
             onChange={(e) => setSelectedAgent(e.target.value)}
           >
@@ -174,174 +144,48 @@ function App() {
           </select>
         </div>
 
-        {/* Load Agent Button */}
         <button
           onClick={handleLoadAgent}
           disabled={!selectedAgent}
-          className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-full w-full"
+          className="mb-6 bg-red-600 text-white py-3 px-6 rounded-full w-full font-semibold hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
         >
           Load Agent
         </button>
 
-        {/* Load Status */}
-        {loadStatus && <p className="mt-4 text-green-600">{loadStatus}</p>}
+        {loadStatus && (
+          <p className="mb-6 text-green-600 font-semibold text-center">
+            {loadStatus}
+          </p>
+        )}
 
-        {/* Select Connection */}
         <ConnectionsDropdown
           connections={connections}
           setSelectedConnection={setSelectedConnection}
         />
 
-        {/* Chat Window (only show if LLM provider is selected) */}
         {selectedConnection &&
           connections[selectedConnection]?.is_llm_provider && (
-            <div className="mt-6 mb-4 bg-gray-50 p-4 h-72 overflow-y-auto rounded-lg shadow-inner">
-              <div className="flex flex-col space-y-4">
-                {messages.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`flex break-words whitespace-pre-wrap ${
-                      message.sender === "user"
-                        ? "justify-end"
-                        : "justify-start"
-                    }`}
-                  >
-                    <div
-                      className={`p-2 rounded-lg break-words whitespace-pre-wrap ${
-                        message.sender === "user"
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-300 text-black"
-                      }`}
-                    >
-                      {renderMessageWithLinks(message.text)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ChatWindow
+              messages={messages}
+              prompt={prompt}
+              setPrompt={setPrompt}
+              handleAction={handleAction}
+              connections={connections}
+            />
           )}
 
-        {/* Chat Input (only show if LLM provider is selected) */}
-        {selectedConnection &&
-          connections[selectedConnection]?.is_llm_provider && (
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600">
-                Enter Prompt
-              </label>
-              <input
-                type="text"
-                className="mt-2 w-full border border-gray-300 rounded-lg p-2"
-                placeholder="Type your message..."
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-              />
-            </div>
-          )}
-
-        {/* Send Button (only show if LLM provider is selected) */}
-        {selectedConnection &&
-          connections[selectedConnection]?.is_llm_provider && (
-            <button
-              onClick={() => handleAction("generate-text", connections, prompt)}
-              className="mt-2 bg-green-500 text-white py-2 px-4 rounded-full w-full"
-            >
-              Send
-            </button>
-          )}
-
-        {/* Normal Form for Non-LLM Providers */}
         {selectedConnection &&
           !connections[selectedConnection]?.is_llm_provider && (
-            <div className="mt-6 mb-4 bg-gray-50 p-4 rounded-lg shadow-inner">
-              <h3 className="text-lg font-semibold mb-4">Perform Action</h3>
-              <label className="block text-sm font-medium text-gray-600">
-                Action:
-              </label>
-              <input
-                type="text"
-                className="mt-2 w-full border border-gray-300 rounded-lg p-2"
-                placeholder="Type the action here..."
-                value={action} // Bind the input value to the action state
-                onChange={(e) => setAction(e.target.value)} // Update action state on input change
-              />
-
-              <button
-                className="mt-2 bg-yellow-500 text-white py-2 px-4 rounded-full w-full"
-                onClick={() => handleAction(action, connections, prompt)} // Pass the action input to handleAction
-                disabled={!action} // Disable the button if no action is provided
-              >
-                Perform Action
-              </button>
-            </div>
+            <ActionForm
+              action={action}
+              setAction={setAction}
+              handleAction={handleAction}
+              connections={connections}
+              prompt={prompt}
+              response={response}
+            />
           )}
-
-        {/* Response Section */}
-        <div className="mt-4">
-          {selectedConnection &&
-            !connections[selectedConnection]?.is_llm_provider && (
-              <>
-                <h3 className="text-lg font-semibold">Response:</h3>
-                <p className="text-gray-800 break-words whitespace-pre-wrap">
-                  {String(response) // Convert any response to a string
-                    .split(/(\s+)/) // Split by spaces while keeping spaces
-                    .map((word, index) =>
-                      /^https?:\/\/[^\s]+$/.test(word) ? ( // Check if it's a URL
-                        <a
-                          key={index}
-                          href={word}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 underline break-all"
-                        >
-                          {word}
-                        </a>
-                      ) : (
-                        word // Render normal text
-                      )
-                    )}
-                </p>
-              </>
-            )}
-        </div>
       </div>
     </div>
   );
 }
-
-export default App;
-
-const ConnectionsDropdown = ({ connections, setSelectedConnection }) => {
-  // Filter out connections that are not configured
-  const configuredConnections = Object.entries(connections).filter(
-    ([_, connectionDetails]) => connectionDetails.configured
-  );
-
-  // If no connections are configured, return null (hide the dropdown)
-  if (configuredConnections.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="mb-4 mt-6">
-      <label className="block text-sm font-medium text-gray-600">
-        Select Connection
-      </label>
-      <select
-        className="mt-2 w-full border border-gray-300 rounded-lg p-2"
-        onChange={(e) => setSelectedConnection(e.target.value)}
-      >
-        <option value="">-- Select Connection --</option>
-        {configuredConnections.map(([connectionName, connectionDetails]) => {
-          const isLLMProvider = connectionDetails.is_llm_provider;
-          return (
-            <option key={connectionName} value={connectionName}>
-              {connectionName}
-              {connectionDetails.configured && " (Configured)"}
-              {isLLMProvider && " - LLM Provider"}
-            </option>
-          );
-        })}
-      </select>
-    </div>
-  );
-};

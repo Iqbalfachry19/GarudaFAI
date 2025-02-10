@@ -81,9 +81,16 @@ poetry shell
 2. Run the application:
 
 ```bash
-poetry run python main.py
+poetry run python main.py --server --host 0.0.0.0 --port 8000
 ```
 
+2. Run the frontend:
+
+```bash
+cd frontend
+npm i
+npm run dev
+```
 ## Configure connections & launch an agent
 
 1. Configure your desired connections:

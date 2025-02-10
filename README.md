@@ -1,9 +1,6 @@
-# ZerePy
+# GarudaFAI
 
-ZerePy is an open-source Python framework designed to let you deploy your own agents on X, powered by multiple LLMs.
-
-ZerePy is built from a modularized version of the Zerebro backend. With ZerePy, you can launch your own agent with
-similar core functionality as Zerebro. For creative outputs, you'll need to fine-tune your own model.
+GarudaFAI is an innovative project built on the Zerepy AI Agents Framework that leverages decentralized finance (DeFi) on the Sonic. The project name fuses the Indonesian national symbol “Garuda” with “FAI” (short for Financial AI), evoking strength, agility, and visionary technology while keeping its identity entirely in English.
 
 ## Features
 
@@ -20,9 +17,7 @@ similar core functionality as Zerebro. For creative outputs, you'll need to fine
   - Echochambers
   - Discord
 - Blockchain Networks:
-  - Solana
   - EVM Networks:
-    - Ethereum
     - Sonic 
 - AI/ML Tools:
   - GOAT (Onchain Agent Toolkit)
@@ -30,25 +25,8 @@ similar core functionality as Zerebro. For creative outputs, you'll need to fine
 
 ### Language Model Support
 
-- OpenAI
-- Anthropic
-- EternalAI
-- Ollama
-- Hyperbolic
-- Galadriel
 - Allora
-- xAI (Grok)
 - GROQ API
-
-## Quickstart
-
-The quickest way to start using ZerePy is to use our Replit template:
-
-https://replit.com/@blormdev/ZerePy?v=1
-
-1. Fork the template (you will need you own Replit account)
-2. Click the run button on top
-3. Voila! your CLI should be ready to use, you can jump to the configuration section
 
 ## Requirements
 
@@ -60,19 +38,10 @@ System:
 Environment Variables:
 
 - LLM: make an account and grab an API key (at least one)
-  - OpenAI: https://platform.openai.com/api-keys
-  - Anthropic: https://console.anthropic.com/account/keys
-  - EternalAI: https://eternalai.oerg/api
-  - Hyperbolic: https://app.hyperbolic.xyz
-  - Galadriel: https://dashboard.galadriel.com
   - GROQ: https://console.groq.com/
 - Social (based on your needs):
   - X API: https://developer.x.com/en/docs/authentication/oauth-1-0a/api-key-and-secret
-  - Farcaster: Warpcast recovery phrase
-  - Echochambers: API key and endpoint
 - On-chain Integration:
-  - Solana: private key
-  - Ethereum: private keys
   - Sonic: private keys
 
 ## Installation
@@ -84,13 +53,13 @@ Follow the steps here to use the official installation: https://python-poetry.or
 2. Clone the repository:
 
 ```bash
-git clone https://github.com/blorm-network/ZerePy.git
+git clone https://github.com/Iqbalfachry19/GarudaFAI.git
 ```
 
 3. Go to the `zerepy` directory:
 
 ```bash
-cd zerepy
+cd GarudaFAI
 ```
 
 4. Install dependencies:
@@ -121,20 +90,8 @@ poetry run python main.py
 
    ```
    configure-connection twitter    # For Twitter/X integration
-   configure-connection openai     # For OpenAI
-   configure-connection anthropic  # For Anthropic
-   configure-connection farcaster  # For Farcaster
-   configure-connection eternalai  # For EternalAI
-   configure-connection solana     # For Solana
    configure-connection goat       # For Goat
-   configure-connection galadriel  # For Galadriel
-   configure-connection ethereum   # For Ethereum
    configure-connection sonic      # For Sonic
-   configure-connection discord    # For Discord
-   configure-connection ollama     # For Ollama
-   configure-connection xai        # For Grok
-   configure-connection allora     # For Allora
-   configure-connection hyperbolic # For Hyperbolic
    configure-connection groq       # For GROQ
    ```
 
@@ -199,12 +156,6 @@ poetry add goat-sdk-plugin-coingecko     # For price data
                  "goat_plugins.erc20.token.USDC"
                ]
              }
-           },
-           {
-             "name": "coingecko",
-             "args": {
-               "api_key": "YOUR_API_KEY"
-             }
            }
          ]
        }
@@ -218,16 +169,8 @@ Note that the order of plugins in the configuration doesn't matter, but each plu
 
 Each [plugin](https://github.com/goat-sdk/goat/tree/main/python/src/plugins) provides specific functionality:
 
-- **1inch**: Interact with 1inch DEX aggregator for best swap rates
-- **allora**: Connect with Allora protocol
-- **coingecko**: Get real-time price data for cryptocurrencies using the CoinGecko API
-- **dexscreener**: Access DEX trading data and analytics
+
 - **erc20**: Interact with ERC20 tokens (transfer, approve, check balances)
-- **farcaster**: Interact with the Farcaster social protocol
-- **nansen**: Access Nansen's on-chain analytics
-- **opensea**: Interact with NFTs on OpenSea marketplace
-- **rugcheck**: Analyze token contracts for potential security risks
-- Many more to come...
 
 Note: While these plugins are available in the GOAT SDK, you'll need to install them separately using Poetry and configure them in your agent's JSON file. Each plugin may require its own API keys or additional setup.
 
@@ -313,99 +256,6 @@ Each plugin has its own configuration options that can be specified in the agent
   - History tracking
   - Topic management
 
-## Create your own agent
-
-The secret to having a good output from the agent is to provide as much detail as possible in the configuration file. Craft a story and a context for the agent, and pick very good examples of tweets to include.
-
-If you want to take it a step further, you can fine tune your own model: https://platform.openai.com/docs/guides/fine-tuning.
-
-Create a new JSON file in the `agents` directory following this structure:
-
-```json
-{
-  "name": "ExampleAgent",
-  "bio": [
-    "You are ExampleAgent, the example agent created to showcase the capabilities of ZerePy.",
-    "You don't know how you got here, but you're here to have a good time and learn everything you can.",
-    "You are naturally curious, and ask a lot of questions."
-  ],
-  "traits": ["Curious", "Creative", "Innovative", "Funny"],
-  "examples": ["This is an example tweet.", "This is another example tweet."],
-  "example_accounts" : ["X_username_to_use_for_tweet_examples"],
-  "loop_delay": 900,
-  "config": [
-    {
-      "name": "twitter",
-      "timeline_read_count": 10,
-      "own_tweet_replies_count": 2,
-      "tweet_interval": 5400
-    },
-    {
-      "name": "farcaster",
-      "timeline_read_count": 10,
-      "cast_interval": 60
-    },
-    {
-      "name": "openai",
-      "model": "gpt-3.5-turbo"
-    },
-    {
-      "name": "anthropic",
-      "model": "claude-3-5-sonnet-20241022"
-    },
-    {
-      "name": "eternalai",
-      "model": "NousResearch/Hermes-3-Llama-3.1-70B-FP8",
-      "chain_id": "45762"
-    },
-    {
-      "name": "solana",
-      "rpc": "https://api.mainnet-beta.solana.com"
-    },
-    {
-      "name": "ollama",
-      "base_url": "http://localhost:11434",
-      "model": "llama3.2"
-    },
-    {
-      "name": "hyperbolic",
-      "model": "meta-llama/Meta-Llama-3-70B-Instruct"
-    },
-    {
-      "name": "galadriel",
-      "model": "gpt-3.5-turbo"
-    },
-    {
-      "name": "discord",
-      "message_read_count": 10,
-      "message_emoji_name": "❤️",
-      "server_id": "1234567890"
-    },
-    {
-      "name": "sonic",
-      "network": "mainnet"
-    },
-    {
-      "name": "allora",
-      "chain_slug": "testnet"
-    },
-    {
-      "name": "ethereum",
-      "rpc": "https://eth.blockrazor.xyz"
-    }
-  ],
-  "tasks": [
-    { "name": "post-tweet", "weight": 1 },
-    { "name": "reply-to-tweet", "weight": 1 },
-    { "name": "like-tweet", "weight": 1 }
-  ],
-  "use_time_based_weights": false,
-  "time_based_multipliers": {
-    "tweet_night_multiplier": 0.4,
-    "engagement_day_multiplier": 1.5
-  }
-}
-```
 
 ## Available Commands
 
@@ -421,10 +271,3 @@ Use `help` in the CLI to see all available commands. Key commands include:
 - `chat`: Start interactive chat with agent
 - `clear`: Clear the terminal screen
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=blorm-network/ZerePy&type=Date)](https://star-history.com/#blorm-network/ZerePy&Date)
-
----
-
-Made with ♥ @Blorm.xyz

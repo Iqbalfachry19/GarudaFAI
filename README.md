@@ -84,7 +84,7 @@ poetry shell
 poetry run python main.py --server --host 0.0.0.0 --port 8000
 ```
 
-2. Run the frontend:
+3. Run the frontend:
 
 ```bash
 cd frontend

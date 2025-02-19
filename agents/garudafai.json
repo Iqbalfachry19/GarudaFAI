@@ -26,48 +26,14 @@
       "own_tweet_replies_count": 5,
       "tweet_interval": 3600
     },
-    {
-      "name": "farcaster",
-      "timeline_read_count": 15,
-      "cast_interval": 120
-    },
-    {
-      "name": "openai",
-      "model": "gpt-4-turbo"
-    },
-    {
-      "name": "anthropic",
-      "model": "claude-3-opus"
-    },
-    {
-      "name": "xai",
-      "model": "grok-3"
-    },    
-    {
-      "name": "together",
-      "model": "meta-llama/Meta-Llama-3.1-70B-Instruct"
-    },    
-    {
-      "name": "solana",
-      "rpc": "https://api.mainnet-beta.solana.com"
-    },
-    {
-      "name": "eternalai",
-      "model": "NousResearch/Hermes-3-Llama-3.1-70B",
-      "chain_id": "45762"
-    },
-    {
-      "name": "ollama",
-      "base_url": "http://localhost:11434",
-      "model": "llama3.2"
-    },
+   
     {
       "name": "goat",
       "plugins": [
         {
           "name": "erc20",
           "args": {
-            "tokens": ["goat_plugins.erc20.token.PEPE", "goat_plugins.erc20.token.USDC", "goat_plugins.erc20.token.MODE"]
+            "tokens": ["goat_plugins.erc20.token.PEPE", "goat_plugins.erc20.token.USDC", "goat_plugins.erc20.token.WETH"]
           }
         }
       ]
@@ -78,16 +44,8 @@
       "temperature": 0.4
     },
     {
-      "name": "hyperbolic",
-      "model": "meta-llama/Meta-Llama-3-70B-Instruct"
-    },
-    {
-      "name": "galadriel",
-      "model": "gpt-4-turbo"
-    },
-    {
       "name": "sonic",
-      "network": "mainnet"
+      "network": "testnet"
     },
     {
       "name": "allora",

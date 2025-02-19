@@ -393,11 +393,11 @@ class GoatConnection(BaseConnection):
             logger.error(error_msg)
             raise GoatConfigurationError(error_msg)
 
-    def perform_action(self, action_name: str, **kwargs) -> Any:
+    def perform_action(self, action_name: str, kwargs) -> Any:
         """Execute a GOAT action using a plugin's tool"""
         action = self.actions.get(action_name)
         if not action:
             raise KeyError(f"Unknown action: {action_name}")
-
+        print(kwargs)
         tool = self._action_registry[action_name]
         return tool.execute(kwargs)

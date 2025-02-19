@@ -34,8 +34,6 @@ Environment Variables:
 
 - LLM: make an account and grab an API key (at least one)
   - GROQ: https://console.groq.com/
-- Social (based on your needs):
-  - X API: https://developer.x.com/en/docs/authentication/oauth-1-0a/api-key-and-secret
 - On-chain Integration:
   - Sonic: private keys
 

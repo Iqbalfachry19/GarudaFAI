@@ -11,11 +11,6 @@ GarudaFAI is an innovative project built on the Zerepy AI Agents Framework that 
 - Blockchain integration
 
 ### Platform Integrations
-- Social Platforms:
-  - Twitter/X
-  - Farcaster
-  - Echochambers
-  - Discord
 - Blockchain Networks:
   - EVM Networks:
     - Sonic 

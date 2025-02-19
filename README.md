@@ -236,33 +236,6 @@ Each plugin has its own configuration options that can be specified in the agent
     - Token swaps via Sonic DEX
     - Network switching (mainnet/testnet)
 
-- EternalAI
-  - Transform agents to smart contracts
-  - Deploy on 10+ blockchains
-  - Onchain system prompts
-  - Decentralized inference
-
-### Social Platforms
-- Twitter/X
-  - Post and reply to tweets
-  - Timeline management
-  - Engagement features
-
-- Farcaster
-  - Cast creation and interactions
-  - Timeline and reply management
-  - Like/requote functionality
-
-- Discord
-  - Channel management
-  - Message operations
-  - Reaction handling
-
-- Echochambers
-  - Room messaging and context
-  - History tracking
-  - Topic management
-
 
 ## Available Commands
 

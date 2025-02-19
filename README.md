@@ -215,16 +215,6 @@ Each plugin has its own configuration options that can be specified in the agent
 - Multi-chain support with secure wallet management
 
 ### Blockchain Networks
-- Solana
-  - SOL/SPL transfers and swaps via Jupiter
-  - Staking and balance management
-  - Network monitoring and token queries
-
-- EVM Networks
-  - Ethereum
-    - ETH/ERC-20 transfers and swaps
-    - Kyberswap integration
-    - Balance and token queries
   - Sonic
     - Fast EVM transactions
     - Custom slippage settings

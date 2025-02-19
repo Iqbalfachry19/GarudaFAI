@@ -1,6 +1,6 @@
 # GarudaFAI
 
-GarudaFAI is an innovative project built on the Zerepy AI Agents Framework that leverages decentralized finance (DeFi) on the Sonic. The project name fuses the Indonesian national symbol “Garuda” with “FAI” (short for Financial AI), evoking strength, agility, and visionary technology while keeping its identity entirely in English.
+GarudaFAI is an innovative project built on the Zerepy AI Agents Framework that leverages decentralized finance (DeFi) on the Sonic and allora inference for price prediction. The project name fuses the Indonesian national symbol “Garuda” with “FAI” (short for Financial AI), evoking strength, agility, and visionary technology while keeping its identity entirely in English.
 
 ## Features
 
